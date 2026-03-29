@@ -46,7 +46,7 @@ Modern yapı, hibrit çok katmanlı malzeme yaklaşımına dayanmaktadır.
 Karşılaştırma amacıyla standart tek katmanlı alüminyum bariyer yapısı ele alınmıştır.
 
 #### Temel özellikler:
-- 🔩 **10 mm alüminyum zırh yapısı**
+- 🔩 **2 mm alüminyum zırh yapısı**
 - ☢️ **Yüksek enerjili proton ve gamalara karşı sınırlı dayanım**
 - ⚠️ **Modül ve aviyonik bölgelerde kritik parçacık sızıntısı riski**
 - 📉 **Modern sisteme göre daha düşük koruma performansı**
