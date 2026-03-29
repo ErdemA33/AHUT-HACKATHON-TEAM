@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>GÖK-SİPER | Uzay Radyasyon Kalkanı Proje Portalı</title>
+    <style>
+        :root {
+            --bg: #0a0a0a; --modern: #ff9800; --legacy: #888888;
+            --text: #ffffff; --card-bg: #161616; --accent-red: #d32f2f;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg);
+            color: var(--text); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+        }
+        .container { max-width: 1200px; padding: 60px 20px; text-align: center; }
+        h1 { font-size: 3.2rem; color: var(--modern); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 5px; font-weight: 900; text-shadow: 0 0 20px rgba(255,152,0,0.3); }
+        .subtitle { font-size: 1.2rem; color: #aaa; margin-bottom: 60px; font-style: italic; letter-spacing: 1px; }
+        
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+        .card {
+            background-color: var(--card-bg); border-radius: 20px; padding: 40px; border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .card.modern-card { border-top: 6px solid var(--modern); box-shadow: 0 15px 40px rgba(255, 152, 0, 0.1); }
+        .card.legacy-card { border-top: 6px solid var(--legacy); }
+        .card:hover { transform: translateY(-10px); background-color: #1e1e1e; border-color: rgba(255,255,255,0.2); }
+        
+        .card h2 { font-size: 2.2rem; margin-top: 0; color: var(--modern); letter-spacing: 1px; }
+        .legacy-card h2 { color: var(--legacy); }
+        
+        .description { text-align: left; line-height: 1.8; color: #eee; margin: 25px 0; font-size: 1rem; }
+        .tech-list { padding-left: 0; list-style: none; }
+        .tech-list li { margin-bottom: 15px; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+        .tech-list li::before { content: '◈'; position: absolute; left: 0; color: var(--modern); font-weight: bold; }
+        .legacy-card .tech-list li::before { content: '✕'; color: var(--legacy); }
+        
+        .btn {
+            display: inline-block; padding: 20px 45px; border-radius: 50px; text-decoration: none;
+            font-weight: 900; text-transform: uppercase; cursor: pointer; border: none; font-size: 1.1rem;
+            transition: 0.3s; letter-spacing: 1px;
+        }
+        .btn-modern { background-color: var(--modern); color: #000; box-shadow: 0 5px 15px rgba(255,152,0,0.3); }
+        .btn-modern:hover { background-color: #fff; transform: scale(1.05); }
+        .btn-legacy { background-color: #333; color: #fff; }
+        .btn-legacy:hover { background-color: #555; }
+
+        #simulation-frame { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; }
+        .close-sim {
+            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+            background: var(--accent-red); color: #fff; border: none; padding: 14px 40px;
+            cursor: pointer; font-weight: 900; z-index: 1001; border-radius: 50px; text-transform: uppercase;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5); transition: 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="main-portal">
+    <h1>GÖK-SİPER</h1>
+    <p class="subtitle">Hibrit Çok Katmanlı Radyasyon Zırhlama Karşılaştırma Portalı</p>
+    
+    <div class="comparison-grid">
+        <div class="card modern-card">
+            <div>
+                <h2>GÖK-SİPER (MODERN)</h2>
+                <div class="description">
+                    <p><strong>İleri Nesil Hibrit Malzemeler:</strong></p>
+                    <ul class="tech-list">
+                        <li><strong>Bor Karbür (B4C):</strong> Nötron yakalama mekanizması.</li>
+                        <li><strong>UHMWPE:</strong> Hidrojen zenginliği ile üst düzey Proton moderasyonu.</li>
+                        <li><strong>Bizmut:</strong> Hassas aviyonik koruma katmanı.</li>
+                        <li><strong>Sonuç:</strong> Aviyonik sistemlerde %0 sızıntı başarısı.</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="btn btn-modern" onclick="openSim('modern')">MODERN SİMÜLASYONU BAŞLAT</button>
+        </div>
+
+        <div class="card legacy-card">
+            <div>
+                <h2>GELENEKSEL SİSTEM</h2>
+                <div class="description">
+                    <p><strong>Standart Alüminyum Bariyer:</strong></p>
+                    <ul class="tech-list">
+                        <li>Tek katmanlı 10mm Alüminyum zırh yapısı.</li>
+                        <li>Yüksek enerjili proton ve gamalara karşı geçirgenlik.</li>
+                        <li>Modül ve Aviyonik birimlerde kritik parçacık sızıntısı.</li>
+                        <li>Sızıntı Oranı: %50 kritik geçirgenlik seviyesi.</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="btn btn-legacy" onclick="openSim('legacy')">GELENEKSEL SİMÜLASYON</button>
+        </div>
+    </div>
+</div>
+
+<div id="simulation-frame">
+    <button class="close-sim" onclick="closeSim()">× PORTALA GERİ DÖN</button>
+    <iframe id="sim-iframe" src="" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
+</div>
+
+<script>
+    const links = {
+        modern: "https://nimble-banoffee-502632.netlify.app/", 
+        legacy: "https://deft-smakager-af283d.netlify.app/"
+    };
+
+    function openSim(type) {
+        const frame = document.getElementById('simulation-frame');
+        const iframe = document.getElementById('sim-iframe');
+        const main = document.getElementById('main-portal');
+
+        iframe.src = links[type];
+        frame.style.display = 'block';
+        main.style.display = 'none';
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeSim() {
+        const frame = document.getElementById('simulation-frame');
+        const iframe = document.getElementById('sim-iframe');
+        const main = document.getElementById('main-portal');                
+
+        frame.style.display = 'none';
+        main.style.display = 'block';
+        iframe.src = ""; 
+        document.body.style.overflow = 'auto';
+    }
+</script>
+
+</body>
+</html>
